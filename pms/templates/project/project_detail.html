@@ -1,0 +1,211 @@
+{% extends '../base.html' %}
+{% block content %}
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Detail View</title>
+  <style>
+      .highlight {
+        background-color: rgb(0, 255, 149);
+        border-radius: 15px;
+        padding: 4px;
+      }     
+  </style>
+</head>
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="navbar-brand brand-logo mr-5" href="{% url 'managerpage' %}"><img src="{% static "images/logo.svg" %}" class="mr-2" alt="logo"/></a>
+        <a class="navbar-brand brand-logo-mini" href="{% url 'managerpage' %}"><img src="{% static "images/logo-mini.svg" %}" alt="logo"/></a>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+          <span class="icon-menu"></span>
+        </button>
+        <ul class="navbar-nav mr-lg-2">
+          <li class="nav-item nav-search d-none d-lg-block">
+            <div class="input-group">
+              <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                <span class="input-group-text" id="search">
+                  <i class="icon-search"></i>
+                </span>
+              </div>
+              <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+            </div>
+          </li>
+        </ul>
+        <ul class="navbar-nav navbar-nav-right">
+          <li class="nav-item nav-profile dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+              <img src="{% static "images/faces/face28.jpg" %}" alt="profile"/>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+              <a class="dropdown-item" href="{% url 'logout' %}">
+                <i class="ti-power-off text-primary"></i>
+                Logout
+              </a>
+            </div>
+          </li>
+          <li class="nav-item nav-settings d-none d-lg-flex">
+            <a class="nav-link" href="#">
+              <i class="icon-ellipsis"></i>
+            </a>
+          </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <span class="icon-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+      <div class="theme-setting-wrapper">
+      </div>
+      <div id="right-sidebar" class="settings-panel">
+        <i class="settings-close ti-close"></i>
+        <div class="tab-content" id="setting-content">
+          <!-- To do section tab ends -->
+          <!-- chat tab ends -->
+        </div>
+      </div>
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'managerpage' %}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Projects</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{% url "addprojects" %}">Add Projects</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url "addprojectsmodules" %}">Add Modules</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url "addprojectstask" %}">Add Task</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url "addprojectsteam" %}">Create Team</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "projectlist" %}" aria-expanded="false" aria-controls="form-elements">
+              <i class="icon-columns menu-icon"></i>
+              <span class="menu-title">Project List</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "userprofile" %}" aria-expanded="false" aria-controls="auth">
+              <i class="icon-head menu-icon"></i>
+              <span class="menu-title">Profile</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Project Details of {{projectdetail.project_title}}</h4>
+                      <div class="form-group">
+                        <h4>Project Title:</h4> {{projectdetail.project_title}}
+                      </div>
+                      <div class="form-group">
+                        <h4>Project Description:</h4>{{projectdetail.project_decription}}
+                      </div>
+                      <div class="form-group">
+                        <h4>Project Technology:</h4><span class="highlight">{{projectdetail.project_technology}}</span>
+                      </div>
+                      <div class="form-group">
+                        <h4>Estimated Hours:</h4>{{projectdetail.project_estimated_hours}}&nbsp;hours
+                      </div>
+                      <div class="form-group">
+                        <h4>Start Date:</h4>{{projectdetail.project_start_date}}
+                      </div>
+                      <div class="form-group">
+                        <h4>Completion Date:</h4>{{projectdetail.project_completion_date}}
+                      </div>
+                      <div class="form-group">
+                        <h4>Project File(If Any):</h4>{{projectdetail.project_file}}
+                      </div>
+                      <div class="form-group">
+                        <h4>Status:</h4>
+                        {% if projectdetail.status == 'Completed' %}
+                          <div class="badge badge-success">Completed</div>
+                        {% elif projectdetail.status == 'Pending' %}
+                          <div class="badge badge-warning">Pending</div>
+                        {% else %}
+                          <div class="badge badge-danger">Danger</div>
+                        {% endif %}
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          {% for t in team|slice:":1" %}
+                          {% if t not in team %}<p>Team is not created!</p>{% endif %}
+                          {% if t in team %}
+                          <h3>Team Details</h3>
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No.</th>
+                                <th>Username</th>
+                                <th>Status</th>
+                                <th>Badge</th>
+                              </tr>
+                            </thead>
+                            {% endif %}
+                            {% endfor %}
+                            <tbody><!--if-condition-team-details-->
+                              {% for t in team %}
+                              {% if t in team %}
+                              <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{t.user.username}}</td>
+                                <td>
+                                  {% if t.status == 'Completed' %}
+                                    <div class="badge badge-success">Completed</div>
+                                  {% elif t.status == 'Pending' %}
+                                    <dv class="badge badge-warning">Pending</div>
+                                  {% else %}
+                                    <div class="badge badge-danger">Cancelled</div>
+                                  {% endif %}
+                                </td>
+                                <td>{{t.badge}}</td>
+                              </tr>
+                            </tbody>
+                              {% endif %}
+                              {% endfor %}
+                          </table>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+</body>
+</html>
+{% endblock content %}

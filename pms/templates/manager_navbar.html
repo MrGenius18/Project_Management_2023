@@ -1,0 +1,33 @@
+{% extends './base.html' %}
+
+{% block content %}
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'managerpage' %}">
+          <i class="icon-grid menu-icon"></i>
+          <span class="menu-title">Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'addprojects' %}">
+          <i class="icon-layout menu-icon"></i>
+          <span class="menu-title">Add Projects</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'projectlist' %}">
+          <i class="icon-align-left menu-icon"></i>
+          <span class="menu-title">Project List</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'userprofile' %}">
+          <i class="icon-head menu-icon"></i>
+          <span class="menu-title">View Profile</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+{% endblock content %}
