@@ -12,9 +12,10 @@ urlpatterns = [
  path('login/',UserLoginView.as_view(),name='login'),
  path('logout/',views.logoutUser,name='logout'),
  path('sendmail/',views.sendMail,name='sendmail'),
- path('userprofile/',UserProfileView.as_view(),name='userprofile'),
  path('managerpage/',ManagerPage.as_view(),name="managerpage"),
  path('developerpage/',DeveloperPage.as_view(),name="developerpage"),
  path('adminpage/',AdminPage.as_view(),name="adminpage"),
- path('managerpage/',views.project_chart, name='managerpage'),
+ path('userprofile/',UserProfileView.as_view(),name="userprofile"),
+ path('userprofileupdate/<int:pk>',UserProfileUpdateView.as_view(),name="userprofileupdate"),
+ 
 ]

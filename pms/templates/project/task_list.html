@@ -1,0 +1,98 @@
+{% extends '../base.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Developer Dashboard</title>
+</head>
+<body>
+  <div class="container-scroller">
+    {% include '../developer_navbar.html' %}
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title">List of Tasks</p>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                        <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row"><div class="col-sm-12 col-md-6">                            
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+    
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table id="example" class="display expandable-table dataTable no-footer" style="width: 100%;" role="grid">
+                          <thead>
+                            <tr role="row">
+                                <th rowspan="1" colspan="1" aria-label="Title" style="width: 102px;">No.</th>
+                                <th tabindex="0" rowspan="1" colspan="1" style="width: 170px;">Team Name</th>
+                                <th tabindex="0" rowspan="1" colspan="1" style="width: 153px;">Project Title</th>
+                                <th tabindex="0" rowspan="1" colspan="1" style="width: 135px;">Badge</th>
+                                <th tabindex="0" rowspan="1" colspan="1" style="width: 127px;">Status</th>
+                                {% comment %}<th tabindex="0" rowspan="1" colspan="1" style="width: 161px;">Status</th>
+                                <th tabindex="0" rowspan="1" colspan="1" style="width: 161px;">Actions</th>
+                                 <th rowspan="1" colspan="1" aria-label="" style="width: 16px;"></th> {% endcomment %}
+                            </tr>
+                          </thead>
+                      <tbody>
+                        
+                        {% for task in tasks %}
+                        <tr class="table table-striped">
+                            <td>{{forloop.counter}}</td>
+                            <td>{{task.team_name}}</td>
+                            <td><b>{{task.project}}</b></td>
+                            <td>{{task.badge}}</td>
+                            {% comment %}<td>{{project.project_completion_date}}</td> {% endcomment %}
+                            {% comment %} <td>{{project.status}}</td> {% endcomment %}
+                            <td class="font-weight-medium">
+                              {% comment %} <div class="badge badge-{{project.status}}">{{project.status}}</div> {% endcomment %}
+                              {% if task.status == 'Completed' %}
+    
+                                <div class="badge badge-success">Completed</div>
+                              
+                              {% elif task.status == 'Pending' %}
+    
+                                <div class="badge badge-warning">Pending</div>
+                              
+                              {% else %}
+    
+                                <div class="badge badge-danger">Cancelled</div>
+                                
+                              {% endif %}
+                            </td>
+                            <div class="font-weight-medium">
+                            {% comment %} <td>
+                              <a class="dropdown-item" href="{% url 'projectupdate' project.id %}"><i class="ti-pencil-alt"></i> Edit</a>
+                              <a class="dropdown-item" href="{% url 'projectdelete' project.id %}"><i class="ti-trash"></i> Delete</a>
+                              <a class="dropdown-item" href="{% url 'projectdetail' project.id %}"><i class="ti-notepad"></i> Detail</a>
+                            </td> {% endcomment %}
+                          </div>
+                        </tr>
+                        {% comment %} <td colspan="8"><table style="width:100%;" cellspacing="0" cellpadding="5" border="0"><tbody><tr class="expanded-row"><td colspan="8" class="row-bg"><div><div class="d-flex justify-content-between"><div class="cell-hilighted"><div class="d-flex mb-2"><div class="me-2 min-width-cell"><p>Policy start date</p><h6>25/04/2020</h6></div><div class="min-width-cell"><p>Policy end date</p><h6>24/04/2021</h6></div></div><div class="d-flex"><div class="me-2 min-width-cell"><p>Sum insured</p><h5>$26,000</h5></div><div class="min-width-cell"><p>Premium</p><h5>$1200</h5></div></div></div><div class="expanded-table-normal-cell"><div class="me-2 mb-4"><p>Quote no.</p><h6>Incs234</h6></div><div class="me-2"><p>Vehicle Reg. No.</p><h6>KL-65-A-7004</h6></div></div><div class="expanded-table-normal-cell"><div class="me-2 mb-4"><p>Policy number</p><h6>Incsq123456</h6></div><div class="me-2"><p>Policy number</p><h6>Incsq123456</h6></div></div><div class="expanded-table-normal-cell"><div class="me-2 mb-3 d-flex"><div class="highlighted-alpha"> A</div><div><p>Agent / Broker</p><h6>Abcd Enterprices</h6></div></div><div class="me-2 d-flex"> <img src="../../images/faces/face5.jpg" alt="profile"><div><p>Policy holder Name &amp; ID Number</p><h6>Phillip Harris / 1234567</h6></div></div></div><div class="expanded-table-normal-cell"><div class="me-2 mb-4"><p>Branch</p><h6>Koramangala, Chicago</h6></div></div><div class="expanded-table-normal-cell"><div class="me-2 mb-4"><p>Channel</p><h6>Online</h6></div></div></div></div></td></tr></tbody></table></td> {% endcomment %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+</body>
+</html>
+{% endblock content %}

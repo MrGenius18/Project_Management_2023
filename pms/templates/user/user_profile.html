@@ -1,4 +1,4 @@
-          {% extends '../base.html' %}
+{% extends '../base.html' %}
           {% block content %}
           {% load static %}
           {% load crispy_forms_tags %}
@@ -8,7 +8,7 @@
             <!-- Required meta tags -->
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-            <title>Manager Dashboard</title>
+            <title>User Profile</title>
           </head>
           <body>
             <div class="container-scroller">
@@ -71,6 +71,7 @@
                 </div>
                 <!-- partial -->
                 <!-- partial:partials/_sidebar.html -->
+                {% if user.is_manager == True %}
                 <nav class="sidebar sidebar-offcanvas" id="sidebar">
                   <ul class="nav">
                     <li class="nav-item">
@@ -108,6 +109,25 @@
                     </li>
                   </ul>
                 </nav>
+                {% endif %}
+                {% if user.is_developer == True %}
+                <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                  <ul class="nav">
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'developerpage' %}">
+                        <i class="icon-grid menu-icon"></i>
+                        <span class="menu-title">Dashboard</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url "userprofile" %}" aria-expanded="false" aria-controls="auth">
+                        <i class="icon-head menu-icon"></i>
+                        <span class="menu-title">Profile</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+                {% endif %}
                 <!-- partial -->
                 <div class="main-panel">
                   <div class="content-wrapper">
@@ -115,46 +135,24 @@
                       <div class="col-12 grid-margin">
                         <div class="card">
                           <div class="card-body">
-                            <h4 class="card-title">Horizontal Two column</h4>
-                            <form class="form-sample">
+                            <h4 class="card-title">Your Profile</h4>
+                            <form class="form-sample" method="POST" enctype ="multipart/form-data">
+                              {% csrf_token %}
                               <p class="card-description">
                                 Personal info
                               </p>
                               <div class="row">
                                 <div class="col-md-6">
                                   <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">First Name</label>
                                     <div class="col-sm-9">
-                                      <input type="text" class="form-control" />
+                                      {{form.first_name|as_crispy_field}}
                                     </div>
                                   </div>
                                 </div>
                                 <div class="col-md-6">
                                   <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Last Name</label>
                                     <div class="col-sm-9">
-                                      <input type="text" class="form-control" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Gender</label>
-                                    <div class="col-sm-9">
-                                      <select class="form-control">
-                                        <option>Male</option>
-                                        <option>Female</option>
-                                      </select>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Date of Birth</label>
-                                    <div class="col-sm-9">
-                                      <input class="form-control" placeholder="dd/mm/yyyy"/>
+                                      {{form.last_name|as_crispy_field}}
                                     </div>
                                   </div>
                                 </div>
@@ -162,35 +160,31 @@
                               <div class="row">
                                 <div class="col-md-6">
                                   <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Category</label>
                                     <div class="col-sm-9">
-                                      <select class="form-control">
-                                        <option>Category1</option>
-                                        <option>Category2</option>
-                                        <option>Category3</option>
-                                        <option>Category4</option>
-                                      </select>
+                                      {{form.username|as_crispy_field}}
                                     </div>
                                   </div>
                                 </div>
                                 <div class="col-md-6">
                                   <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Membership</label>
+                                    <div class="col-sm-9">
+                                      {{form.birthDate|as_crispy_field}}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-group row">
+                                    <div class="col-sm-9">
+                                      {{form.gender|as_crispy_field}}
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="form-group row">
                                     <div class="col-sm-4">
-                                      <div class="form-check">
-                                        <label class="form-check-label">
-                                          <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios1" value="" checked>
-                                          Free
-                                        </label>
-                                      </div>
-                                    </div>
-                                    <div class="col-sm-5">
-                                      <div class="form-check">
-                                        <label class="form-check-label">
-                                          <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios2" value="option2">
-                                          Professional
-                                        </label>
-                                      </div>
+                                      {{form.salary|as_crispy_field}}
                                     </div>
                                   </div>
                                 </div>
@@ -201,17 +195,15 @@
                               <div class="row">
                                 <div class="col-md-6">
                                   <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Address 1</label>
                                     <div class="col-sm-9">
-                                      <input type="text" class="form-control" />
+                                      {{form.address|as_crispy_field}}
                                     </div>
                                   </div>
                                 </div>
                                 <div class="col-md-6">
                                   <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">State</label>
                                     <div class="col-sm-9">
-                                      <input type="text" class="form-control" />
+                                      {{form.state|as_crispy_field}}
                                     </div>
                                   </div>
                                 </div>
@@ -219,17 +211,15 @@
                               <div class="row">
                                 <div class="col-md-6">
                                   <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Address 2</label>
                                     <div class="col-sm-9">
-                                      <input type="text" class="form-control" />
+                                      {{form.landmark|as_crispy_field}}
                                     </div>
                                   </div>
                                 </div>
                                 <div class="col-md-6">
                                   <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Postcode</label>
                                     <div class="col-sm-9">
-                                      <input type="text" class="form-control" />
+                                      {{form.city|as_crispy_field}}
                                     </div>
                                   </div>
                                 </div>
@@ -237,26 +227,13 @@
                               <div class="row">
                                 <div class="col-md-6">
                                   <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">City</label>
                                     <div class="col-sm-9">
-                                      <input type="text" class="form-control" />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Country</label>
-                                    <div class="col-sm-9">
-                                      <select class="form-control">
-                                        <option>America</option>
-                                        <option>Italy</option>
-                                        <option>Russia</option>
-                                        <option>Britain</option>
-                                      </select>
+                                      {{form.profile_pic|as_crispy_field}}
                                     </div>
                                   </div>
                                 </div>
                               </div>
+                              <input type ="submit" class="btn btn-primary" value ="Submit" />
                             </form>
                           </div>
                         </div>

@@ -1,10 +1,14 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView,ListView,DetailView,UpdateView,DeleteView
+from django.views.generic import TemplateView,ListView,DetailView,UpdateView,DeleteView,View
 from django.views.generic.edit import FormView,CreateView
-from .forms import *
+from pms.project.forms import *
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from user.decorators import *
+from plotly.offline import plot
+import plotly.graph_objs as go
+from django.shortcuts import render, get_object_or_404
+import plotly.express as px
 
 class IndexView(TemplateView):
     template_name = "project/index.html"
@@ -85,7 +89,7 @@ class ProjectDetailView(DetailView):
     
     def get(self, request, *args, **kwargs):
         team = Project_Team.objects.filter(project_id=self.kwargs['pk'])
-        return render(request, self.template_name, {'project_detail': self.get_object(),'team':team})
+        return render(request, self.template_name, {'projectdetail': self.get_object(),'team':team})
     
       
 @method_decorator([login_required(login_url="/user/login"),manager_required],name='dispatch')
@@ -98,5 +102,50 @@ class ProjectDeleteView(DeleteView):
 
 
 @method_decorator(login_required(login_url='/user/login'), name='dispatch')
-class YourTask(TemplateView):
-    template_name = 'project/your_task.html'
+class TaskListView(ListView):
+    # model = User_Task
+    # template_name = 'project/task_list.html'
+    # context_object_name = 'task_list'
+    
+    # def get_queryset(self):
+    #     return super().get_queryset()
+
+
+    model = Project_Team
+    template_name = 'project/task_list.html'
+    context_object_name = 'tasks'
+    
+    def get_queryset(self):
+        return super().get_queryset().filter(user__username=self.request.user.username)
+    
+
+# class ProjectListView(LoginRequiredMixin, ListView):
+#     model = Project_Team
+#     template_name = 'project/task_list.html'
+#     context_object_name = 'tasks'
+
+#     def get_queryset(self):
+#         return super().get_queryset().filter(user=self.request.user.username)
+
+
+class ProjectModuleGanttView(DetailView):
+    model = Project
+    template_name = 'project/modules_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        project = self.object
+        modules = project.project_module_set.all()
+        df = []
+        for module in modules:
+            df.append({
+                'Task': module.module_name,
+                'Start': module.module_start_date,
+                'Finish': module.module_completion_date,
+                'Developer': module.user.username if module.user else '',
+            })
+        fig = px.timeline(df, x_start="Start", x_end="Finish", y="Task", color="Developer")
+        chart_div = fig.to_html(full_html=False)
+        context['chart_div'] = chart_div
+        context['modules'] = modules
+        return context

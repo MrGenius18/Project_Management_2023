@@ -7,11 +7,13 @@ class AddProjectsForm(form.ModelForm):
         fields = '__all__'
         
 class ProjectModulesForm(form.ModelForm):
+    user = form.ModelChoiceField(queryset=User.objects.filter(is_developer=True))
     class Meta:
         model = Project_Module
         fields = '__all__'
 
 class ProjectTaskForm(form.ModelForm):
+    user = form.ModelChoiceField(queryset=User.objects.filter(is_developer=True))
     class Meta:
         model = Project_Task
         fields = '__all__'
