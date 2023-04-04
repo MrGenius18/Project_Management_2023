@@ -8,7 +8,7 @@
       <!-- Required meta tags -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>Manager Dashboard</title>
+      <title>Project List</title>
     </head>
     <body>
       <div class="container-scroller">
@@ -27,68 +27,110 @@
                             <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                                 <div class="row"><div class="col-sm-12 col-md-6">                            
                                 </div>
-                                <div class="col-sm-12 col-md-6">
-        
-                                </div>
+                                <!--Searching and sorting-->
+                                  <div class="col-sm-12 col-md-6">
+                                      <form method="get" action="{% url 'projectlist' %}">
+                                        <div class="form-row align-items-center">
+                                            <div class="col-auto my-1">
+                                                <label class="mr-sm-2 sr-only" for="sort_by">Sort by</label>
+                                                <select class="custom-select mr-sm-2" id="sort_by" name="sort_by">
+                                                    <option value="">Sort by</option>
+                                                    <option value="name" {% if request.GET.sort_by == 'name' %}selected{% endif %}>Name</option>
+                                                    <option value="start_date" {% if request.GET.sort_by == 'start_date' %}selected{% endif %}>Starting Date</option>
+                                                    <option value="completion_date" {% if request.GET.sort_by == 'completion_date' %}selected{% endif %}>Completion Date</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-auto my-1">
+                                                <label class="mr-sm-2 sr-only" for="search">Search</label>
+                                                <input type="text" class="form-control" id="search" name="search" placeholder="Search" value="{{ request.GET.search }}">
+                                            </div>
+                                            <div class="col-auto my-1">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </div>
+                                      </form>
+                                  </div>
+                                  <!--Searching and sorting ends-->
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <table id="example" class="display expandable-table dataTable no-footer" style="width: 100%;" role="grid">
+                                    <table class="display expandable-table dataTable no-footer" style="width: 100%;" role="grid">
                               <thead>
                                 <tr role="row">
-                                    <th rowspan="1" colspan="1" aria-label="Title" style="width: 102px;">No.</th>
-                                    <th tabindex="0" rowspan="1" colspan="1" style="width: 170px;">Title</th>
-                                    <th tabindex="0" rowspan="1" colspan="1" style="width: 153px;">Technolgy</th>
-                                    <th tabindex="0" rowspan="1" colspan="1" style="width: 135px;">Starting Date</th>
-                                    <th tabindex="0" rowspan="1" colspan="1" style="width: 127px;">Completion Date</th>
-                                    <th tabindex="0" rowspan="1" colspan="1" style="width: 161px;">Status</th>
-                                    <th tabindex="0" rowspan="1" colspan="1" style="width: 161px;">Actions</th>
-                                    {% comment %} <th rowspan="1" colspan="1" aria-label="" style="width: 16px;"></th> {% endcomment %}
+                                    <th>No.</th>
+                                    <th>Title</th>
+                                    <th>Technolgy</th>
+                                    <th>Starting Date</th>
+                                    <th>Completion Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
                                 </tr>
                               </thead>
-                          <tbody>
-                            
-                            {% for project in project_list %}
-                            <tr class="table table-striped">
-                                <td>{{forloop.counter}}</td>
-                                <td>{{project.project_title}}<a href="{% url 'modules' project.id %}">View Modules</a></td>
-                                <td><b>{{project.project_technology}}</b></td>
-                                <td>{{project.project_start_date}}</td>
-                                <td>{{project.project_completion_date}}</td>
-                                {% comment %} <td>{{project.status}}</td> {% endcomment %}
-                                <td class="font-weight-medium">
-                                  {% comment %} <div class="badge badge-{{project.status}}">{{project.status}}</div> {% endcomment %}
-                                  {% if project.status == 'Completed' %}
-        
-                                    <div class="badge badge-success">Completed</div>
-                                  
-                                  {% elif project.status == 'Pending' %}
-        
-                                    <div class="badge badge-warning">Pending</div>
-                                  
-                                  {% else %}
-        
-                                    <div class="badge badge-danger">Cancelled</div>
-                                    
-                                  {% endif %}
-                                </td>
-                                <div class="font-weight-medium">
-                                <td>
-                                  <a class="dropdown-item" href="{% url 'projectupdate' project.id %}"><i class="ti-pencil-alt"></i> Edit</a>
-                                  <a class="dropdown-item" href="{% url 'projectdelete' project.id %}"><i class="ti-trash"></i> Delete</a>
-                                  <a class="dropdown-item" href="{% url 'projectdetail' project.id %}"><i class="ti-notepad"></i> Detail</a>
-                                </td>
-                              </div>
-                            </tr>
-                            {% comment %} <td colspan="8"><table style="width:100%;" cellspacing="0" cellpadding="5" border="0"><tbody><tr class="expanded-row"><td colspan="8" class="row-bg"><div><div class="d-flex justify-content-between"><div class="cell-hilighted"><div class="d-flex mb-2"><div class="me-2 min-width-cell"><p>Policy start date</p><h6>25/04/2020</h6></div><div class="min-width-cell"><p>Policy end date</p><h6>24/04/2021</h6></div></div><div class="d-flex"><div class="me-2 min-width-cell"><p>Sum insured</p><h5>$26,000</h5></div><div class="min-width-cell"><p>Premium</p><h5>$1200</h5></div></div></div><div class="expanded-table-normal-cell"><div class="me-2 mb-4"><p>Quote no.</p><h6>Incs234</h6></div><div class="me-2"><p>Vehicle Reg. No.</p><h6>KL-65-A-7004</h6></div></div><div class="expanded-table-normal-cell"><div class="me-2 mb-4"><p>Policy number</p><h6>Incsq123456</h6></div><div class="me-2"><p>Policy number</p><h6>Incsq123456</h6></div></div><div class="expanded-table-normal-cell"><div class="me-2 mb-3 d-flex"><div class="highlighted-alpha"> A</div><div><p>Agent / Broker</p><h6>Abcd Enterprices</h6></div></div><div class="me-2 d-flex"> <img src="../../images/faces/face5.jpg" alt="profile"><div><p>Policy holder Name &amp; ID Number</p><h6>Phillip Harris / 1234567</h6></div></div></div><div class="expanded-table-normal-cell"><div class="me-2 mb-4"><p>Branch</p><h6>Koramangala, Chicago</h6></div></div><div class="expanded-table-normal-cell"><div class="me-2 mb-4"><p>Channel</p><h6>Online</h6></div></div></div></div></td></tr></tbody></table></td> {% endcomment %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                              <tbody>
+                               {% for project in project_list %}
+                                <tr class="table table-striped">
+                                    <td>{{forloop.counter}}</td>
+                                    <td><p>{{project.project_title}}</p>
+                                      <a class="dropdown-item" href="{% url 'modules' project.id %}" style="color:#4B49AC;"><i class="ti-bar-chart"></i> View Modules</a>
+                                    </td>
+                                    <td><b>{{project.project_technology}}</b></td>
+                                    <td>{{project.project_start_date}}</td>
+                                    <td>{{project.project_completion_date}}</td> 
+                                    <td class="font-weight-medium">
+                                      {% if project.status == 'Completed' %}
+            
+                                        <div class="badge badge-success">Completed</div>
+                                      
+                                      {% elif project.status == 'Pending' %}
+            
+                                        <div class="badge badge-warning">Pending</div>
+                                      
+                                      {% else %}
+            
+                                        <div class="badge badge-danger">Cancelled</div>
+                                        
+                                      {% endif %}
+                                    </td>
+                                    <div class="font-weight-medium">
+                                    <td>
+                                      <a class="dropdown-item" href="{% url 'projectupdate' project.id %}" style="color:#4B49AC;"><i class="ti-pencil-alt"></i> Edit</a>
+                                      <a class="dropdown-item" href="{% url 'projectdelete' project.id %}" style="color:#4B49AC;"><i class="ti-trash"></i> Delete</a>
+                                      <a class="dropdown-item" href="{% url 'projectdetail' project.id %}" style="color:#4B49AC;"><i class="ti-notepad"></i> Detail</a>
+                                    </td>
+                                  </div>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                            <div class="pagination justify-content-center">
+                              <ul class="pagination">
+                                {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                  <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo; Previous</a>
+                                </li>
+                                {% endif %}
+                                {% for num in page_obj.paginator.page_range %}
+                                {% if page_obj.number == num %}
+                                <li class="page-item active">
+                                  <a class="page-link" href="#">{{ num }} <span class="sr-only">(current)</span></a>
+                                </li>
+                                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <li class="page-item">
+                                  <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                                {% endif %}
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                <li class="page-item">
+                                  <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>
+                                </li>
+                                {% endif %}
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            </div>
-            <!-- content-wrapper ends -->
-          </div>
           <!-- main-panel ends -->
         </div>
         <!-- page-body-wrapper ends -->

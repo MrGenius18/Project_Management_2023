@@ -74,6 +74,7 @@ class Project_Task(models.Model):
    task_title = models.CharField(max_length=100)
    task_description = models.TextField()
    priority = models.CharField(choices=priorityChoice,max_length=30)
+   user= models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
    task_estimated_hours = models.IntegerField()
    task_util_minutes = models.IntegerField()
    status = models.CharField(choices=status_choice,max_length=100)

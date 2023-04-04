@@ -22,12 +22,13 @@
         <div class="main-panel">
             <div class="content-wrapper">
               <div class="row">
-                <h1>{{ object.project_name }}</h1>
-                <p>{{ object.project_description }}</p>
-                      <div class="card-header">
-                        <h3 class="card-title">Project Modules</h3>
-                      </div>
+                  <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="table-responsive">
                       <div class="card-body">
+                        <div class="card-header">
+                          <h3 class="card-title">Project Modules</h3>
+                        </div>
                         {% if modules %}
                           <table class="table table-bordered table-hover">
                             <thead>
@@ -38,7 +39,7 @@
                                 <th>Completion Date</th>
                                 <th>User</th>
                                 <th>Status</th>
-                                <th>Description</th>
+                                {% comment %} <th>Description</th> {% endcomment %}
                               </tr>
                             </thead>
                             <tbody>
@@ -50,19 +51,22 @@
                                   <td>{{ module.module_completion_date }}</td>
                                   <td>{{ module.user.username }}</td>
                                   <td>{{ module.status }}</td>
-                                  <td>{{ module.module_description }}</td>
+                                  {% comment %} <td>{{ module.module_description }}</td> {% endcomment %}
                                 </tr>
                               {% endfor %}
                             </tbody>
                           </table>
                         {% else %}
-                          <p>No modules added for this project.</p>
+                          <p>No modules added for this project.<br></p> <a href="{% url 'addprojectsmodules' %}" class="btn btn-primary">Add Now</a>
                         {% endif %}
 
                         <!-- Add this div tag to display the Gantt chart -->
                         {{ chart_div|safe }}
 
                       </div>
+                    </div>
+                    </div>
+                  </div>
               </div>
             </div>
             <!-- content-wrapper ends -->
