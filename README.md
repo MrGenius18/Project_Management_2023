@@ -21,6 +21,3 @@ Manager Page
 ![manager-page](https://user-images.githubusercontent.com/90546286/229265602-a2bb0f1a-4e82-43a3-96fe-5e25f0a4d0af.jpeg)
 Project List
 ![project-list](https://user-images.githubusercontent.com/90546286/229265607-5f144abf-e4c0-4e74-9212-b9299de57513.jpeg)
-
-# Django_TimeTracker_2023
-
