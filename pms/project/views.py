@@ -155,3 +155,6 @@ class ProjectModuleGanttView(DetailView):
             context['modules'] = []
 
         return context
+    
+class profile(TemplateView):
+    template_name = "project/profile.html"

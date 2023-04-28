@@ -14,4 +14,5 @@ urlpatterns = [
  path('projectupdate/<int:pk>',ProjectUpdateView.as_view(),name='projectupdate'),
  path('projectdetail/<int:pk>',ProjectDetailView.as_view(),name='projectdetail'),
  path('modules/<int:pk>',ProjectModuleGanttView.as_view(), name='modules'),
+ path('profile/', profile.as_view(), name="profile")
 ]

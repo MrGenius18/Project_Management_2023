@@ -1,0 +1,101 @@
+{% extends '../base.html' %}
+{% block content %}
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  
+  <body>
+    <div class="container-scroller">
+      {% include '../manager_navbar.html' %}
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="card mb-10 col-md-15" style="max-width: 540px">
+            <div class="row no-gutters">
+              <div class="col-md-2">
+                {% comment %}
+                <img src="{% static 'images/faces/face15.jpg' %}" class="card-img" >
+                {% endcomment %}
+                {% if user.profile_pic %}
+                  <img src="{{ user.profile_pic.url }}" alt="profile"/>
+                  {% else %}
+                  <img src="{% static 'images/faces/face15.jpg' %}"/>
+                {% endif %}
+              </div>
+              <div class="col-md-10">
+                <div class="card-body">
+                  <p class="mb-0 font-weight-thin h3 text-black">{{user.first_name}} {{user.last_name}}</p>
+                  <div class="events pt-4 px-3">
+                    <div class="wrapper d-flex h4 mb-2">
+                      <i class="ti-control-record text-primary mr-2"></i>
+                      <span>Username</span>
+                    </div>
+                    <p class="mb-0 font-weight-thin h4 text-gray">{{user.username}}</p>
+                  </div>
+                  <div class="events pt-4 px-3">
+                    <div class="wrapper d-flex h4 mb-2">
+                      <i class="ti-control-record text-primary mr-2"></i>
+                      <span>Email</span>
+                    </div>
+                    <p class="mb-0 font-weight-thin h4 text-gray">{{user.email}}</p>
+                  </div>
+                  <div class="events pt-4 px-3">
+                    <div class="wrapper d-flex h4 mb-2">
+                      <i class="ti-control-record text-primary mr-2"></i>
+                      <span>Birth Date</span>
+                    </div>
+                    <p class="mb-0 font-weight-thin h4 text-gray">{{user.birthDate}}</p>
+                  </div>
+                  <div class="events pt-4 px-3">
+                    <div class="wrapper d-flex h4 mb-2">
+                      <i class="ti-control-record text-primary mr-2"></i>
+                      <span>Gender</span>
+                    </div>
+                    <p class="mb-0 font-weight-thin h4 text-gray">{{user.gender}}</p>
+                  </div>
+                  <div class="events pt-4 px-3">
+                    <div class="wrapper d-flex h4 mb-2">
+                      <i class="ti-control-record text-primary mr-2"></i>
+                      <span>Address</span>
+                    </div>
+                    <p class="mb-0 font-weight-thin h4 text-gray">{{user.address}}</p>
+                  </div>
+                  <div class="events pt-4 px-3">
+                    <div class="wrapper d-flex h4 mb-2">
+                      <i class="ti-control-record text-primary mr-2"></i>
+                      <span>Landmark</span>
+                    </div>
+                    <p class="mb-0 font-weight-thin h4 text-gray">{{user.landmark}}</p>
+                  </div>
+                  <div class="events pt-4 px-3">
+                    <div class="wrapper d-flex h4 mb-2">
+                      <i class="ti-control-record text-primary mr-2"></i>
+                      <span>State</span>
+                    </div>
+                    <p class="mb-0 font-weight-thin h4 text-gray">{{user.state}}</p>
+                  </div>
+                  <div class="events pt-4 px-3">
+                    <div class="wrapper d-flex h4 mb-2">
+                      <i class="ti-control-record text-primary mr-2"></i>
+                      <span>City</span>
+                    </div>
+                    <p class="mb-0 font-weight-thin h4 text-gray">{{user.city}}</p>
+                  </div>
+                  <div class="events pt-4 px-3">
+                    <div class="wrapper d-flex h4 mb-2">
+                      <i class="ti-control-record text-primary mr-2"></i>
+                      <span>Salary</span>
+                    </div>
+                    <p class="mb-0 font-weight-thin h4 text-gray">{{user.salary}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+  </body>
+</html>
+{% endblock content %}
